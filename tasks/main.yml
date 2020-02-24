@@ -30,6 +30,7 @@
   copy:
     src: {{ item.local }}
     dest: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
+    force: no
   loop: {{ docker_deployment_shared_files }}
 
 - name: Link shared files into release folder
