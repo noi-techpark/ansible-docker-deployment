@@ -1,0 +1,59 @@
+---
+- name: Log into AWS ECR docker registry
+  shell: "$(/usr/local/bin/aws ecr get-login --no-include-email --region {{ docker_deployment_aws_region }})"
+
+- name: Create the project folder
+  file:
+    dest: /var/docker/{{ docker_deployment_project_name }}
+    state: directory
+    mode: 0755
+
+- name: Create the release folder
+  file:
+    dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}
+    state: directory
+    mode: 0755
+
+- name: Copy release files
+  copy:
+    src: {{ item.local }}
+    dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
+  loop: {{ docker_deployment_release_files }}
+
+- name: Create the shared folder
+  file:
+    dest: /var/docker/{{ docker_deployment_project_name }}/shared
+    state: directory
+    mode: 0755
+
+- name: Copy shared files
+  copy:
+    src: {{ item.local }}
+    dest: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
+  loop: {{ docker_deployment_shared_files }}
+
+- name: Link shared files into release folder
+  file:
+    src: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
+    dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
+    state: link
+  loop: {{ docker_deployment_shared_files }}
+
+- name: Stop old Docker containers
+  docker_compose:
+    project_src: /var/docker/{{ docker_deployment_project_name }}/current
+    state: absent
+
+- name: Updating current link
+  file:
+    src: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}
+    dest: /var/docker/{{ docker_deployment_project_name }}/current
+    state: link
+
+- name: Start new Docker containers
+  docker_compose:
+    project_src: /var/docker/{{ docker_deployment_project_name }}/current
+    state: present
+    pull: yes
+
+# Healthchecks

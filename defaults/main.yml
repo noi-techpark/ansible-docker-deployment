@@ -1,0 +1,12 @@
+---
+docker_deployment_project_name: project-name
+docker_deployment_release_name: 1
+docker_deployment_release_files:
+  - local: docker-compose.run.yml
+    remote: docker-compose.yml
+  - local: .env
+    remote: .env
+docker_deployment_shared_files: []
+docker_deployment_aws_region: eu-west-1
+docker_deployment_aws_access_key_id: ''
+docker_deployment_aws_secret_access_key: ''
