@@ -18,7 +18,7 @@
   copy:
     src: {{ item.local }}
     dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
-  loop: {{ docker_deployment_release_files }}
+  loop: '{{ docker_deployment_release_files }}'
 
 - name: Create the shared folder
   file:
@@ -31,14 +31,14 @@
     src: {{ item.local }}
     dest: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
     force: no
-  loop: {{ docker_deployment_shared_files }}
+  loop: '{{ docker_deployment_shared_files }}'
 
 - name: Link shared files into release folder
   file:
     src: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
     dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
     state: link
-  loop: {{ docker_deployment_shared_files }}
+  loop: '{{ docker_deployment_shared_files }}'
 
 - name: Stop old Docker containers
   docker_compose:
