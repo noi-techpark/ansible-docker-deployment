@@ -41,9 +41,9 @@
   loop: '{{ docker_deployment_shared_files }}'
 
 - name: Check if current folder exists
-    stat:
-      path: /var/docker/{{ docker_deployment_project_name }}/current
-    register: current_folder_details
+  stat:
+    path: /var/docker/{{ docker_deployment_project_name }}/current
+  register: current_folder_details
 
 - name: Stop old Docker containers
   docker_compose:
