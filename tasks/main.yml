@@ -1,6 +1,6 @@
 ---
 - name: Log into AWS ECR docker registry
-  shell: "$(/usr/local/bin/aws ecr get-login --no-include-email --region {{ docker_deployment_aws_region }})"
+  shell: "$(aws ecr get-login --no-include-email --region {{ docker_deployment_aws_region }})"
 
 - name: Create the project folder
   file:
