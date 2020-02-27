@@ -66,5 +66,5 @@
     docker_deployment_docker_compose_up
 
 - debug:
-  var: docker_deployment_docker_compose_up
+    var: docker_deployment_docker_compose_up
 # Healthchecks
