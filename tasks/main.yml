@@ -16,7 +16,7 @@
 
 - name: Copy release files
   copy:
-    src: {{ item.local }}
+    src: '{{ item.local }}'
     dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
   loop: '{{ docker_deployment_release_files }}'
 
@@ -28,7 +28,7 @@
 
 - name: Copy shared files
   copy:
-    src: {{ item.local }}
+    src: '{{ item.local }}'
     dest: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
     force: no
   loop: '{{ docker_deployment_shared_files }}'
