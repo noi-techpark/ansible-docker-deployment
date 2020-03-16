@@ -58,43 +58,43 @@
     state: link
 
 - name: Start the release
-    block:
-      - name: Start new Docker containers
-        docker_compose:
-          project_src: /var/docker/{{ docker_deployment_project_name }}/current
-          state: present
-          pull: yes
+  block:
+    - name: Start new Docker containers
+      docker_compose:
+        project_src: /var/docker/{{ docker_deployment_project_name }}/current
+        state: present
+        pull: yes
 
-      - name: Run health checks
-        shell:
-          chdir: /var/docker/{{ docker_deployment_project_name }}/current
-          cmd: python3 /var/docker/healthchecks.py
+    - name: Run health checks
+      shell:
+        chdir: /var/docker/{{ docker_deployment_project_name }}/current
+        cmd: python3 /var/docker/healthchecks.py
 
-    rescue:
-      - name: Stop new Docker containers
-        docker_compose:
-          project_src: /var/docker/{{ docker_deployment_project_name }}/current
-          state: absent
+  rescue:
+    - name: Stop new Docker containers
+      docker_compose:
+        project_src: /var/docker/{{ docker_deployment_project_name }}/current
+        state: absent
 
-      - name: Delete current link if old release did not exist
-        file:
-          path: /var/docker/{{ docker_deployment_project_name }}/current
-          state: absent
-        when: docker_deployment_current_folder_stats.stat.exists == False 
+    - name: Delete current link if old release did not exist
+      file:
+        path: /var/docker/{{ docker_deployment_project_name }}/current
+        state: absent
+      when: docker_deployment_current_folder_stats.stat.exists == False 
 
-      - name: Revert current link if old release existed
-        file:
-          src: docker_deployment_current_folder_stats.stat.lnk_source
-          dest: /var/docker/{{ docker_deployment_project_name }}/current
-          state: link
-        when: docker_deployment_current_folder_stats.stat.exists
+    - name: Revert current link if old release existed
+      file:
+        src: docker_deployment_current_folder_stats.stat.lnk_source
+        dest: /var/docker/{{ docker_deployment_project_name }}/current
+        state: link
+      when: docker_deployment_current_folder_stats.stat.exists
 
-      - name: Start old Docker containers if old release existed
-        docker_compose:
-          project_src: /var/docker/{{ docker_deployment_project_name }}/current
-          state: present
-        when: docker_deployment_current_folder_stats.stat.exists
+    - name: Start old Docker containers if old release existed
+      docker_compose:
+        project_src: /var/docker/{{ docker_deployment_project_name }}/current
+        state: present
+      when: docker_deployment_current_folder_stats.stat.exists
 
-      - name: Fail the deployment
-        fail:
-          msg: The deployment failed, because the 'docker-compose up' command failed or the containers did not reach a healthy state.
+    - name: Fail the deployment
+      fail:
+        msg: The deployment failed, because the 'docker-compose up' command failed or the containers did not reach a healthy state.
