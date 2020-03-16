@@ -62,9 +62,8 @@
     project_src: /var/docker/{{ docker_deployment_project_name }}/current
     state: present
     pull: yes
-  register:
-    docker_deployment_docker_compose_up
 
-- debug:
-    var: docker_deployment_docker_compose_up
-# Healthchecks
+- name: Run health checks
+  shell:
+    chdir: /var/docker/{{ docker_deployment_project_name }}/current
+    cmd: python3 /var/docker/healthchecks.py
