@@ -84,7 +84,7 @@
 
     - name: Revert current link if old release existed
       file:
-        src: docker_deployment_current_folder_stats.stat.lnk_source
+        src: '{{ docker_deployment_current_folder_stats.stat.lnk_source }}'
         dest: /var/docker/{{ docker_deployment_project_name }}/current
         state: link
       when: docker_deployment_current_folder_stats.stat.exists
