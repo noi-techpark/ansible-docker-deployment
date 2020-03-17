@@ -13,16 +13,18 @@ Deployment of a Docker project.
 
 ## Example Playbook
 
-    - hosts: all
-      roles:
-        - role: ansible-docker-deployment
-          vars:
-            docker_deployment_project_name: project-name
-            docker_deployment_release_name: 1
-            docker_deployment_release_files:
-              - local: docker-compose.run.yml
-                remote: docker-compose.yml
-              - local: .env
-                remote: .env
-            docker_deployment_shared_files: []
-            docker_deployment_aws_ecr_repository: xxx.dkr.ecr.eu-west-1.amazonaws.com
+```yaml
+- hosts: all
+  roles:
+    - role: ansible-docker-deployment
+      vars:
+        docker_deployment_project_name: project-name
+        docker_deployment_release_name: 1
+        docker_deployment_release_files:
+          - local: docker-compose.run.yml
+            remote: docker-compose.yml
+          - local: .env
+            remote: .env
+        docker_deployment_shared_files: []
+        docker_deployment_aws_ecr_repository: xxx.dkr.ecr.eu-west-1.amazonaws.com
+```
