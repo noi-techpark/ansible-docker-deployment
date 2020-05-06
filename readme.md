@@ -10,6 +10,8 @@ Deployment of a Docker project.
 - `docker_deployment_release_files`: A list of files that should be copied to the release folder (with local and remote path)
 - `docker_deployment_shared_files`: A list of files that should be copied to the shared folder if they don't already exist (with local and remote path)
 - `docker_deployment_aws_ecr_repository`: The AWS ECR repository
+- `docker_deployment_pre_release_setup_hook`: An optional pre release setup hook, where custom tasks can be executed
+- `docker_deployment_post_release_setup_hook`: An optional post release setup hook, where custom tasks can be executed
 
 ## Example Playbook
 
@@ -27,4 +29,5 @@ Deployment of a Docker project.
             remote: .env
         docker_deployment_shared_files: []
         docker_deployment_aws_ecr_repository: xxx.dkr.ecr.eu-west-1.amazonaws.com
+        docker_deployment_post_release_setup_hook: '{{ playbook_dir }}/hooks/docker_deployment_post_release_setup_hook.yml'
 ```
