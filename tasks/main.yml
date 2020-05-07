@@ -9,7 +9,7 @@
     mode: 0755
 
 - name: Pre release setup hook
-  include: "{{ docker_deployment_post_release_setup_hook | default(lookup('pipe', 'pwd') ~ '/hooks/empty.yml') }}"
+  include: "{{ docker_deployment_post_release_setup_hook | default(lookup('pipe', 'pwd') ~ '/hook_empty.yml') }}"
 
 - name: Create the release folder
   file:
@@ -44,7 +44,7 @@
   loop: '{{ docker_deployment_shared_files }}'
 
 - name: Post release setup hook
-  include: "{{ docker_deployment_post_release_setup_hook | default(lookup('pipe', 'pwd') ~ '/hooks/empty.yml') }}"
+  include: "{{ docker_deployment_post_release_setup_hook | default(lookup('pipe', 'pwd') ~ '/hook_empty.yml') }}"
 
 - name: Check if current folder exists
   stat:
