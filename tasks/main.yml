@@ -30,7 +30,7 @@
     mode: "{{ item.mode }}"
     recurse: yes
   when: (item.mode | default(none)) != none
-  loop: '{{ docker_deployment_shared_files }}'
+  loop: '{{ docker_deployment_release_files }}'
 
 - name: Create the shared folder
   file:
