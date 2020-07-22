@@ -24,6 +24,14 @@
     dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
   loop: '{{ docker_deployment_release_files }}'
 
+- name: Give release files right permissions
+  file:
+    path: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
+    mode: "{{ item.mode }}"
+    recurse: yes
+  when: (item.mode | default(none)) != none
+  loop: '{{ docker_deployment_shared_files }}'
+
 - name: Create the shared folder
   file:
     dest: /var/docker/{{ docker_deployment_project_name }}/shared
@@ -35,6 +43,14 @@
     src: '{{ item.local }}'
     dest: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
     force: no
+  loop: '{{ docker_deployment_shared_files }}'
+
+- name: Give shared files right permissions
+  file:
+    path: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
+    mode: "{{ item.mode }}"
+    recurse: yes
+  when: (item.mode | default(none)) != none
   loop: '{{ docker_deployment_shared_files }}'
 
 - name: Link shared files into release folder
