@@ -28,7 +28,7 @@
   file:
     path: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
     mode: "{{ item.mode }}"
-    recurse: yes
+    recurse: "{{ item.recurse | default(yes) }}"
   when: (item.mode | default(none)) != none
   loop: '{{ docker_deployment_release_files }}'
 
@@ -49,7 +49,7 @@
   file:
     path: /var/docker/{{ docker_deployment_project_name }}/shared/{{ item.remote }}
     mode: "{{ item.mode }}"
-    recurse: yes
+    recurse: "{{ item.recurse | default(yes) }}"
   when: (item.mode | default(none)) != none
   loop: '{{ docker_deployment_shared_files }}'
 
