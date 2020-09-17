@@ -10,3 +10,4 @@ docker_deployment_shared_files: []
 docker_deployment_aws_ecr_repository: ''
 docker_deployment_pre_release_setup_hook: ~
 docker_deployment_post_release_setup_hook: ~
+docker_deployment_execution_type: app
