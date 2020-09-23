@@ -97,7 +97,7 @@
       when: docker_deployment_execution_type == "app"
 
     - name: Start new Docker containers (one time execution)
-      shell: "/var/docker/{{ docker_deployment_project_name }}/current && docker-compose up --abort-on-container-exit"
+      shell: "cd /var/docker/{{ docker_deployment_project_name }}/current && docker-compose up --abort-on-container-exit"
       when: docker_deployment_execution_type == "task"
 
   rescue:
@@ -123,7 +123,7 @@
       docker_compose:
         project_src: /var/docker/{{ docker_deployment_project_name }}/current
         state: present
-      when: docker_deployment_current_folder_stats.stat.exists && docker_deployment_execution_type == "app"
+      when: docker_deployment_current_folder_stats.stat.exists and docker_deployment_execution_type == "app"
 
     - name: Fail the deployment
       fail:
