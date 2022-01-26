@@ -1,7 +1,4 @@
 ---
-- name: Log into AWS ECR docker registry
-  shell: "aws ecr get-login-password | docker login --username AWS --password-stdin {{ docker_deployment_aws_ecr_repository }}"
-
 - name: Create the project folder
   file:
     dest: /var/docker/{{ docker_deployment_project_name }}
