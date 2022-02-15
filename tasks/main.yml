@@ -6,7 +6,7 @@
     mode: 0755
 
 - name: Pre release setup hook
-  include: "{{ docker_deployment_pre_release_setup_hook }}"
+  include_tasks: "{{ docker_deployment_pre_release_setup_hook }}"
   when: docker_deployment_pre_release_setup_hook is not none and docker_deployment_pre_release_setup_hook != ""
 
 - name: Create the release folder
@@ -58,7 +58,7 @@
   loop: '{{ docker_deployment_shared_files }}'
 
 - name: Post release setup hook
-  include: "{{ docker_deployment_post_release_setup_hook }}"
+  include_tasks: "{{ docker_deployment_post_release_setup_hook }}"
   when: docker_deployment_post_release_setup_hook is not none and docker_deployment_post_release_setup_hook != ""
 
 - name: Check if current folder exists
