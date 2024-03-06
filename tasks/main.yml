@@ -94,7 +94,7 @@
       when: docker_deployment_execution_type == "app"
 
     - name: Start new Docker containers (one time execution)
-      shell: "cd /var/docker/{{ docker_deployment_project_name }}/current && docker-compose up --abort-on-container-exit"
+      shell: "cd /var/docker/{{ docker_deployment_project_name }}/current && docker compose up --abort-on-container-exit"
       when: docker_deployment_execution_type == "task"
 
   rescue:
@@ -124,4 +124,4 @@
 
     - name: Fail the deployment
       fail:
-        msg: The deployment failed, because the 'docker-compose up' command failed or the containers did not reach a healthy state.
+        msg: The deployment failed, because the 'docker compose up' command failed or the containers did not reach a healthy state.
