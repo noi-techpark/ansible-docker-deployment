@@ -84,7 +84,7 @@
       community.docker.docker_compose_v2:
         project_src: /var/docker/{{ docker_deployment_project_name }}/current
         state: present
-        pull: yes
+        pull: always
       when: docker_deployment_execution_type == "app"
 
     - name: Run health checks (continuous execution)
