@@ -67,7 +67,7 @@
   register: docker_deployment_current_folder_stats
 
 - name: Stop old Docker containers
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /var/docker/{{ docker_deployment_project_name }}/current
     state: absent
   when: docker_deployment_current_folder_stats.stat.exists
@@ -81,7 +81,7 @@
 - name: Start the release
   block:
     - name: Start new Docker containers (continuous execution)
-      docker_compose:
+      community.docker.docker_compose_v2:
         project_src: /var/docker/{{ docker_deployment_project_name }}/current
         state: present
         pull: yes
@@ -99,7 +99,7 @@
 
   rescue:
     - name: Stop new Docker containers
-      docker_compose:
+      community.docker.docker_compose_v2:
         project_src: /var/docker/{{ docker_deployment_project_name }}/current
         state: absent
 
@@ -117,7 +117,7 @@
       when: docker_deployment_current_folder_stats.stat.exists
 
     - name: Start old Docker containers if old release existed
-      docker_compose:
+      community.docker.docker_compose_v2:
         project_src: /var/docker/{{ docker_deployment_project_name }}/current
         state: present
       when: docker_deployment_current_folder_stats.stat.exists and docker_deployment_execution_type == "app"
