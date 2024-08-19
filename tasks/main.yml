@@ -3,7 +3,7 @@
   file:
     dest: /var/docker/{{ docker_deployment_project_name }}
     state: directory
-    mode: 0755
+    mode: '755'
 
 - name: Pre release setup hook
   include_tasks: "{{ docker_deployment_pre_release_setup_hook }}"
@@ -13,7 +13,7 @@
   file:
     dest: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}
     state: directory
-    mode: 0755
+    mode: '755'
 
 - name: Copy release files
   copy:
@@ -33,7 +33,7 @@
   file:
     dest: /var/docker/{{ docker_deployment_project_name }}/shared
     state: directory
-    mode: 0755
+    mode: '755'
 
 - name: Copy shared files
   copy:
