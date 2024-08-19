@@ -25,7 +25,7 @@
   file:
     path: /var/docker/{{ docker_deployment_project_name }}/releases/{{ docker_deployment_release_name }}/{{ item.remote }}
     mode: "{{ item.mode }}"
-    recurse: "{{ item.recurse | default(yes) }}"
+    recurse: "{{ item.recurse | default(true) }}"
   when: (item.mode | default(none)) != none
   loop: '{{ docker_deployment_release_files }}'
 
